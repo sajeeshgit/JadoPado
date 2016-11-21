@@ -1,0 +1,57 @@
+Question 
+===========
+
+	1.	1. You’ve found that you need to move servers because the existing provider no longer provides a good experience. An existing application with the following technical stack components (spread across multiple servers) needs to be migrated. Detail a checklist of what considerations you would need
+	2.	2. PHP5
+	3.	3. nginx
+	4.	4. redis
+	5.	5. MySQL
+	6.	6. node.js
+
+Solution : 
+===========
+
+The first think would be taking a complete backup of the working model ( snapshot ) and store it.
+On the New host make sure that we have the same red hat version running and firewall rules(IPtables) if any being disabled. 
+Check if SeLinux is disabled. 
+We have the same network configuration ( checking any NIC bonding ) and NIC cards.
+The Host should have same or more Number of CPU’s and Memory ( RAM and SWAP space )
+The Host should have Disk of the same type and of same volume ( check for logical volumes, raids, SSD’s, partitions )
+
+
+PHP5 - 
+======
+1) If we are going to use the same PHP5.x version on the new host; should be fine installing it and using the the same config file which is php.ini and the same modules.
+    Make sure what all PHP modules are being used with by using $php -m or checking in the location “/usr/lib64/php/modules/“ and install the same.
+2) If we are going to upgrade the PHP5.x to a higher version than with the above points in mind we also need too :
+     a) We need to know what changes are there in the new version from the previous one 
+     b) Is there Backward compatibility 
+     c) what all are the new functions or modules 
+     d) Changes to php.ini file handling
+
+Nginx:
+======
+1) Make sure to we install the same Nginix version thats been running on the current node “nginx -v” and then make sure you move the nginx configuration file also “/etc/nginx/nginx.conf” or it would be better if we move the whole nginx directory under /etc which should be moving everything. 
+2) The whole data which is pointed in the nginx configuration file to serve from and it should be in the exact location as in configuration file ( document root )
+3) Need also keep a note of which flags are nginx complied with 
+ =====
+ nginx -V — should list all the configured modules.
+ =====
+4) Ownership and permissions 
+
+MySQL:
+======
+1) Should be of the same Version that needs to be Installed on the new host as its on the old host ( Mysql -v ); the configuration file that need to be moved if my.cnf 
+2) With respect to the configuration file you need to have the Data stored in the same location as its mentioned there.
+3) Need to take backups of data using “mysqldump command and restore it.
+
+Node.js
+======
+1) Make sure we have config.js and dependencies Installed.
+2) For packages if we have used .json file make a note of that too.
+3) nom is installed and ready.
+
+Redis:
+======
+I have not worked on Redis NoSQL; I have worked on Elastic-search 
+
